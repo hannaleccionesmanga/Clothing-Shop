@@ -62,6 +62,12 @@ This is the backend for the Clothing Shop System built with Node.js, Express, an
 ### Dashboard
 - `GET /api/dashboard/summary` (Admin/Cashier only) - Root `/` redirects here.
 
+### User Management (Admin Only)
+- `GET /api/users` - Get all users
+- `GET /api/users/:id` - Get single user
+- `PUT /api/users/:id` - Update user (role, etc.)
+- `DELETE /api/users/:id` - Delete user
+
 ### Products
 - `GET /api/products`
 - `GET /api/products/:id`
