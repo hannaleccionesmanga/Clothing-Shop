@@ -1,9 +1,10 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { getDashboardSummary } = require('../controllers/dashboardController');
-const { protect, authorize } = require('../middleware/authMiddleware');
 
-// Admin and Cashier can view dashboard summary
-router.get('/summary', protect, authorize('admin', 'cashier'), getDashboardSummary);
+const {
+    getDashboard
+} = require("../controllers/dashboardController");
+
+router.get("/", getDashboard);
 
 module.exports = router;
