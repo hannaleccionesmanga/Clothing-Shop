@@ -2,31 +2,21 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const db = require("./backend/config/db");
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-/*
-    ROUTES
-*/
 const dashboardRoutes = require("./backend/routes/dashboardRoutes");
 
-/*
-    API ROUTES
-*/
 app.use("/api/dashboard", dashboardRoutes);
 
-/*
-    HOME ROUTE
-*/
 app.get("/", (req, res) => {
     res.send("Clothing Shop API Running");
 });
 
-/*
-    PORT
-*/
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
