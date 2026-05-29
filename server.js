@@ -10,10 +10,10 @@ app.use(express.json());
 /*
     ROUTES
 */
-const dashboardRoutes = require("./routes/dashboardRoutes");
+const dashboardRoutes = require("./backend/routes/dashboardRoutes");
 
 /*
-    USE ROUTES
+    API ROUTES
 */
 app.use("/api/dashboard", dashboardRoutes);
 
@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 });
 
 /*
-    SERVER
+    PORT
 */
 const PORT = process.env.PORT || 5000;
 
