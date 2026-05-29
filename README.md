@@ -59,6 +59,9 @@ This is the backend for the Clothing Shop System built with Node.js, Express, an
 - `POST /api/auth/login`
 - `GET /api/auth/profile`
 
+### Dashboard
+- `GET /api/dashboard/summary` (Admin/Cashier only) - Root `/` redirects here.
+
 ### Products
 - `GET /api/products`
 - `GET /api/products/:id`
