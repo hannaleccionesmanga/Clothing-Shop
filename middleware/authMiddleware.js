@@ -1,40 +1,35 @@
+// authMiddleware.js
 const jwt = require('jsonwebtoken');
 
-const protect = (req, res, next) => {
-    let token;
+// Middleware to protect routes
+const authMiddleware = (req, res, next) => {
+  try {
+    // Get token from request header
+    const token = req.header('x-auth-token');
 
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-        try {
-            // Get token from header
-            token = req.headers.authorization.split(' ')[1];
-
-            // Verify token
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-            // Add user info from payload
-            req.user = decoded;
-
-            next();
-        } catch (error) {
-            console.error(error);
-            res.status(401).json({ message: 'Not authorized, token failed' });
-        }
-    }
-
+    // Check if token exists
     if (!token) {
-        res.status(401).json({ message: 'Not authorized, no token' });
+      return res.status(401).json({ 
+        success: false,
+        message: 'Not authorized, no token' 
+      });
     }
+
+    // Verify the token using your secret key
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Attach user data to request object (so you can use it in controllers)
+    req.user = decoded.user;
+
+    // Proceed to the next middleware/controller
+    next();
+
+  } catch (error) {
+    res.status(401).json({ 
+      success: false,
+      message: 'Token not valid or expired' 
+    });
+  }
 };
 
-const authorize = (...roles) => {
-    return (req, res, next) => {
-        if (!roles.includes(req.user.role)) {
-            return res.status(403).json({
-                message: `User role ${req.user.role} is not authorized to access this route`
-            });
-        }
-        next();
-    };
-};
-
-module.exports = { protect, authorize };
+module.exports = authMiddleware;
